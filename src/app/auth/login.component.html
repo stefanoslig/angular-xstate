@@ -1,41 +1,41 @@
 <div class="auth-page">
-    <div class="container page">
-        <div class="row">
-            <div class="col-md-6 offset-md-3 col-xs-12">
-                <h1 class="text-xs-center">Login</h1>
-                <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
-                    <fieldset>
-                        <fieldset class="form-group">
-                            <input 
-								formControlName="email" 
-                                placeholder="Email" 
-                                class="form-control form-control-lg"
-								type="text" />
-								<div *ngIf="emailCtr.errors?.email">
-									Email format is not valid
-								</div>
-								<div *ngIf="emailCtr.dirty && emailCtr.errors?.required">
-										Email is required
-								</div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input 
-								formControlName="password" 
-                                placeholder="Password" 
-                                class="form-control form-control-lg"
-								type="password"/>
-								<div *ngIf="passwordCtr.dirty && passwordCtr.errors?.required">
-									Password is required
-								</div>
-                        </fieldset>
-                        <button class="btn btn-lg btn-primary pull-xs-right" 
-                            type="submit" 
-                            [disabled]="emailCtr.invalid || passwordCtr.invalid">
-                            login
-                        </button>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h1 class="text-xs-center">Login</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+          <fieldset>
+            <fieldset class="form-group">
+              <input formControlName="email" placeholder="Email" class="form-control form-control-lg" type="text" />
+              <div *ngIf="emailCtr.errors?.email">
+                Email format is not valid
+              </div>
+              <div *ngIf="emailCtr.dirty && emailCtr.errors?.required">
+                Email is required
+              </div>
+            </fieldset>
+            <fieldset class="form-group">
+              <input
+                formControlName="password"
+                placeholder="Password"
+                class="form-control form-control-lg"
+                type="password"
+              />
+              <div *ngIf="passwordCtr.dirty && passwordCtr.errors?.required">
+                Password is required
+              </div>
+            </fieldset>
+            <button
+              class="btn btn-lg btn-primary pull-xs-right"
+              type="submit"
+              [disabled]="emailCtr.invalid || passwordCtr.invalid || (loading$ | async)"
+            >
+              login
+            </button>
+          </fieldset>
+		</form>
+		<app-list-errors></app-list-errors>
+      </div>
     </div>
+  </div>
 </div>

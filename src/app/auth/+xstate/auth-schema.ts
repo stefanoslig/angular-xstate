@@ -1,16 +1,22 @@
 import { User } from 'src/app/shared/api/types';
 
 export interface AuthStateSchema {
-    states: {
-        loggedOut: {};
-        loggedIn: {};
-        requestErr: {};
-        loading: {};
-    };
+  states: {
+    boot: {};
+    loggedOut: {};
+    loggedIn: {};
+    requestErr: {};
+    loading: {};
+  };
 }
 
 export type AuthEvent =
-    | { type: 'SUBMIT', username: string, password: string }
-    | { type: 'SUCCESS', userInfo: User }
-    | { type: 'FAILURE', error: Error };
+  | { type: 'INIT' }
+  | { type: 'SUBMIT'; username: string; password: string }
+  | { type: 'SUCCESS'; userInfo: User }
+  | { type: 'FAILURE'; error: Error };
 
+export interface AuthContext {
+  user: User;
+  errors: string[];
+}

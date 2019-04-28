@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
 import { ApiModule } from './api/api.module';
+import { ListErrorsComponent } from './list-errors/list-errors.component';
 
 @NgModule({
-    declarations: [HeaderComponent],
+    declarations: [ListErrorsComponent],
     imports: [
         CommonModule,
         ApiModule
     ],
-    exports: [HeaderComponent]
+    exports: [ListErrorsComponent]
 })
 export class SharedModule { }
