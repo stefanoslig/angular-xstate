@@ -1,6 +1,6 @@
 import { User } from 'src/app/shared/api/types';
 
-export interface AuthStateSchema {
+export interface AuthSchema {
   states: {
     boot: {};
     loggedOut: {};
@@ -9,12 +9,6 @@ export interface AuthStateSchema {
     loading: {};
   };
 }
-
-export type AuthEvent =
-  | { type: 'INIT' }
-  | { type: 'SUBMIT'; username: string; password: string }
-  | { type: 'SUCCESS'; userInfo: User }
-  | { type: 'FAILURE'; error: Error };
 
 export interface AuthContext {
   user: User;

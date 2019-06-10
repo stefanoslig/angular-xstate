@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router, CanLoad } from '@angular/router';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class AuthCanLoad implements CanLoad {
   constructor(private router: Router) {}
 
-  canActivate(): boolean {
+  canLoad(): boolean {
     if (!localStorage.getItem('jwtToken')) {
       this.router.navigate(['/login']);
       return false;
     }
-    this.router.navigate(['']);
     return true;
   }
 }

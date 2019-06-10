@@ -1,5 +1,6 @@
 import { MachineConfig, assign } from 'xstate';
-import { AuthStateSchema, AuthEvent, AuthContext } from './auth-schema';
+import { AuthSchema, AuthContext } from './auth-schema';
+import { AuthEvent } from './auth.events';
 
 export const context: AuthContext = {
   user: {
@@ -12,7 +13,7 @@ export const context: AuthContext = {
   errors: []
 };
 
-export const authMachineConfig: MachineConfig<AuthContext, AuthStateSchema, AuthEvent> = {
+export const authMachineConfig: MachineConfig<AuthContext, AuthSchema, AuthEvent> = {
   id: 'login',
   context,
   initial: 'boot',
@@ -35,11 +36,7 @@ export const authMachineConfig: MachineConfig<AuthContext, AuthStateSchema, Auth
       }
     },
     loggedIn: {
-      type: 'final',
-      invoke: {
-        id: 'success',
-        src: 'loginSuccess'
-      }
+      type: 'final'
     },
     requestErr: {
       on: {
@@ -54,7 +51,7 @@ export const authMachineConfig: MachineConfig<AuthContext, AuthStateSchema, Auth
       on: {
         SUCCESS: {
           target: 'loggedIn',
-          actions: ['assignUser']
+          actions: ['assignUser', 'loginSuccess']
         },
         FAILURE: {
           target: 'requestErr',

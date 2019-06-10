@@ -1,22 +1,22 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { Subject, Observable } from 'rxjs';
-import { AuthMachineService } from './+xstate/auth-machine.service';
+import { Observable } from 'rxjs';
+import { AuthMachine } from './+xstate/auth-machine';
 import { map } from 'rxjs/operators';
+import { LoginSubmit } from './+xstate/auth.events';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  unsubscribe = new Subject();
   emailCtr: AbstractControl;
   passwordCtr: AbstractControl;
   loading$: Observable<boolean>;
 
-  constructor(private fb: FormBuilder, private authMachineService: AuthMachineService) {}
+  constructor(private fb: FormBuilder, private authMachineService: AuthMachine) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -30,15 +30,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
-    this.authMachineService.authMachine.send({
-      type: 'SUBMIT',
-      username: this.emailCtr.value,
-      password: this.passwordCtr.value
-    });
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+    this.authMachineService.send(new LoginSubmit(this.emailCtr.value, this.passwordCtr.value));
   }
 }

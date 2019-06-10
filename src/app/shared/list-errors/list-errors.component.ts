@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthMachineService } from 'src/app/auth/+xstate/auth-machine.service';
+import { AuthMachine } from 'src/app/auth/+xstate/auth-machine';
 
 @Component({
   selector: 'app-list-errors',
@@ -12,13 +12,10 @@ export class ListErrorsComponent implements OnInit, OnDestroy {
   errors$: Observable<string[]>;
   unsubscribe$: Subject<void> = new Subject();
 
-  constructor(private authMachineService: AuthMachineService) {}
+  constructor(private authMachineService: AuthMachine) {}
 
   ngOnInit() {
-    this.errors$ = this.authMachineService.authState$.pipe(map(state => {
-      const e = state.context.errors;
-      return Object.keys(e || {}).map(key => `${key} ${e[key]}`);
-    }));
+    this.errors$ = this.authMachineService.authState$.pipe(map(state => state.context.errors));
   }
 
   ngOnDestroy() {
