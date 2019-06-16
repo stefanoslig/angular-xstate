@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthMachine } from 'src/app/auth/+xstate/auth-machine';
+import { AuthMachine } from 'src/app/auth/+xstate/auth-machine.service';
 
 @Component({
   selector: 'app-list-errors',

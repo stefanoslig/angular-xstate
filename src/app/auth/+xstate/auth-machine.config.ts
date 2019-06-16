@@ -1,6 +1,6 @@
-import { MachineConfig, assign } from 'xstate';
-import { AuthSchema, AuthContext } from './auth-schema';
-import { AuthEvent } from './auth.events';
+import { MachineConfig } from 'xstate';
+import { AuthSchema, AuthContext } from './auth-machine.schema';
+import { AuthEvent } from './auth-machine.events';
 
 export const context: AuthContext = {
   user: {
@@ -13,7 +13,11 @@ export const context: AuthContext = {
   errors: []
 };
 
-export const authMachineConfig: MachineConfig<AuthContext, AuthSchema, AuthEvent> = {
+export const authMachineConfig: MachineConfig<
+  AuthContext,
+  AuthSchema,
+  AuthEvent
+> = {
   id: 'login',
   context,
   initial: 'boot',
@@ -21,8 +25,8 @@ export const authMachineConfig: MachineConfig<AuthContext, AuthSchema, AuthEvent
     boot: {
       on: {
         '': [
-          {target: 'loggedOut', cond: 'isLoggedOut'},
-          {target: 'loggedIn'}
+          { target: 'loggedOut', cond: 'isLoggedOut' },
+          { target: 'loggedIn' }
         ]
       }
     },

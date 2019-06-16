@@ -13,10 +13,18 @@ export class AuthService {
   }
 
   login(credentials: { email: string; password: string }): Observable<User> {
-    return this.apiService.post('/users/login', { user: credentials }).pipe(map(r => r.user));
+    return this.apiService
+      .post('/users/login', { user: credentials })
+      .pipe(map(r => r.user));
   }
 
-  register(credentials: { username: string; email: string; password: string }): Observable<User> {
-    return this.apiService.post('/users', { user: credentials }).pipe(map(r => r.user));
+  register(credentials: {
+    username: string;
+    email: string;
+    password: string;
+  }): Observable<User> {
+    return this.apiService
+      .post('/users', { user: credentials })
+      .pipe(map(r => r.user));
   }
 }
