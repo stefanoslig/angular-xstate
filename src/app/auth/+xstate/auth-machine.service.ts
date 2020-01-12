@@ -13,7 +13,7 @@ import { authMachineConfig } from './auth-machine.config';
 import { AuthSchema, AuthContext } from './auth-machine.schema';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LoginSuccess, AuthEvent, LoginFail } from './auth-machine.events';
+import { LoginSuccess, AuthEvent, LoginFail, UserSuccess, UserFail } from './auth-machine.events';
 
 @Injectable()
 export class AuthMachine {
@@ -25,6 +25,13 @@ export class AuthMachine {
           .pipe(
             map(user => new LoginSuccess(user)),
             catchError(result => of(new LoginFail(result.error.errors)))
+          ),
+      requestUser: (_, event) =>
+        this.authService
+          .user()
+          .pipe(
+            map(user => new UserSuccess(user)),
+            catchError(result => of(new UserFail(result.error.errors)))
           )
     },
     guards: {
@@ -32,7 +39,7 @@ export class AuthMachine {
     },
     actions: {
       assignUser: assign<AuthContext, LoginSuccess>((_, event) => ({
-        user: event.userInfo
+        user: event.user
       })),
       assignErrors: assign<AuthContext, LoginFail>((_, event) => ({
         errors: Object.keys(event.errors || {}).map(
