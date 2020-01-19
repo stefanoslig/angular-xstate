@@ -8,8 +8,8 @@ import { User } from '../shared/api/types';
 export class AuthService {
   constructor(private apiService: ApiService) {}
 
-  user(): Observable<{ user: User }> {
-    return this.apiService.get('/user');
+  user(): Observable<User> {
+    return this.apiService.get('/user').pipe(map(result => result.user));
   }
 
   login(credentials: { email: string; password: string }): Observable<User> {

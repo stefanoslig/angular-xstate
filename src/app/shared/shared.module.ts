@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiModule } from './api/api.module';
-import { ListErrorsComponent } from './list-errors/list-errors.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ListErrorsComponent } from './components/list-errors/list-errors.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-    declarations: [ListErrorsComponent],
+    declarations: [ListErrorsComponent, FooterComponent, NavbarComponent],
     imports: [
         CommonModule,
-        ApiModule
+        ApiModule,
+        RouterModule
     ],
-    exports: [ListErrorsComponent]
+    exports: [ListErrorsComponent, FooterComponent, NavbarComponent]
 })
 export class SharedModule { }
