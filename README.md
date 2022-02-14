@@ -1,5 +1,7 @@
 # AngularXstate
 
+## I'd suggest you to have a look on [this repository](https://github.com/stefanoslig/xstate-angular). It's the repository I try to keep up to date with the latest version of angular, it contains more examples and also a published [library](https://www.npmjs.com/package/xstate-angular). 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.2.
 
 ## Development server
