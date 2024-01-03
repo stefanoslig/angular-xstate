@@ -6,9 +6,7 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { AuthMachine } from './+xstate/auth-machine.service';
-import { map } from 'rxjs/operators';
-import { LoginSubmit } from './+xstate/auth-machine.events';
+import { AuthMachineFacade } from './+xstate/auth-machine.facade';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +17,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   emailCtr: AbstractControl;
   passwordCtr: AbstractControl;
-  loading$: Observable<boolean>;
+  loading$: Observable<boolean> = this.authMachineFacade.loading$;
 
   constructor(
     private fb: FormBuilder,
-    private authMachineService: AuthMachine
+    private authMachineFacade: AuthMachineFacade
   ) {}
 
   ngOnInit() {
@@ -36,15 +34,9 @@ export class LoginComponent implements OnInit {
     });
     this.emailCtr = this.loginForm.get('email');
     this.passwordCtr = this.loginForm.get('password');
-
-    this.loading$ = this.authMachineService.authState$.pipe(
-      map(state => state.matches('loading'))
-    );
   }
 
   submitForm() {
-    this.authMachineService.send(
-      new LoginSubmit(this.emailCtr.value, this.passwordCtr.value)
-    );
+    this.authMachineFacade.login(this.emailCtr.value, this.passwordCtr.value);
   }
 }

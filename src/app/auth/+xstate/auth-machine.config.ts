@@ -40,7 +40,19 @@ export const authMachineConfig: MachineConfig<
       }
     },
     loggedIn: {
-      type: 'final'
+      invoke: {
+        id: 'requestUser',
+        src: 'requestUser'
+      },
+      on: {
+        SUCCESS: {
+          actions: ['assignUser']
+        },
+        FAILURE: {
+          target: 'requestErr',
+          actions: ['assignErrors']
+        }
+      }
     },
     requestErr: {
       on: {

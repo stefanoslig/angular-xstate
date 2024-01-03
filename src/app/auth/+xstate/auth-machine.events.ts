@@ -15,7 +15,17 @@ export class LoginFail {
 
 export class LoginSuccess {
   readonly type = 'SUCCESS';
-  constructor(public userInfo: User) {}
+  constructor(public user: User) {}
+}
+
+export class UserFail {
+  readonly type = 'FAILURE';
+  constructor(public errors: Errors) {}
+}
+
+export class UserSuccess {
+  readonly type = 'SUCCESS';
+  constructor(public user: User) {}
 }
 
 export type AuthEvent = Init | LoginSubmit | LoginSuccess | LoginFail;
